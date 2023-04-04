@@ -1,0 +1,17 @@
+:root {
+  --foreground-color: black;
+  --background-color: white;
+  --wrong-color: red;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-color: rgb(53, 195, 17);
+    --background-color: rgba(0, 0, 0, 0.838);
+  }
+}
