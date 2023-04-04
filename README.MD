@@ -1,1 +1,1 @@
-This is a simple game run for typing like coder. I have taken code from differnt open source projects like Hypernova and Sunpy. You can run the code locally bu using `yarn pracel start`
+This is a simple game for typing like coders. I have taken code from different open source projects like Hypernova and Sunpy. You can run the code locally by using `yarn pracel start`
