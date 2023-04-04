@@ -21,25 +21,13 @@ def _validate_observer_args(initial_obstime, observer, time):
   elif observer is None and time is None:
     raise ValueError(
       "Either the 'observer' or the 'time' keyword must not be None."
-    )
-    `,
+    )`,
   },
   {
     path: "sunpy/conftest.py",
     code: `
 @pytest.fixture()
 def sunpy_cache(mocker, tmp_path):
-  from types import MethodType
-
-  from sunpy.data.data_manager.cache import Cache
-  from sunpy.data.data_manager.downloader import ParfiveDownloader
-  from sunpy.data.data_manager.storage import InMemStorage
-  cache = Cache(
-    ParfiveDownloader(),
-    InMemStorage(),
-    tmp_path,
-    None
-  )
 
   def add(self, url, path):
     self._storage.store({
@@ -52,8 +40,7 @@ def sunpy_cache(mocker, tmp_path):
   def func(mocked):
     mocker.patch(mocked, cache)
     return cache
-  yield func
-    `,
+  yield func`,
   },
   {
     path: "sunpy/physics/differential_rotation.py",
@@ -63,17 +50,10 @@ def differential_rotate(smap, observer=None, time=None, **diff_rot_kwargs):
     raise ValueError("The entire map is off disk. No data to differentially rotate.")
 
   new_observer = _get_new_observer(smap.date, observer, time)
-
-  from skimage import transform
-
-  # Check whether the input contains the full disk of the Sun
   is_sub_full_disk = not contains_full_disk(smap)
   if is_sub_full_disk:
     if not is_all_on_disk(smap):
-      # Get the bottom left and top right coordinates that are the
-      bottom_left, top_right = on_disk_bounding_coordinates(smap)
-      smap = smap.submap(bottom_left, top_right=top_right)
-    `,
+      smap = smap.submap(bottom_left, top_right=top_right)`,
   },
   {
     path: "sunpy/tests/tests/test_self_test.py",
@@ -82,16 +62,13 @@ def test_main_noargs(monkeypatch):
   test_args = _self_test_args()
   assert test_args == ['-W', 'ignore', '--pyargs', 'sunpy']
 
-
 def test_main_submodule_map(monkeypatch):
   args = _self_test_args(package='map')
   assert args == ['-W', 'ignore', '--pyargs', 'sunpy.map']
 
-
 def test_main_submodule_jsoc(monkeypatch):
   args = _self_test_args(package='net.jsoc')
-  assert args == ['-W', 'ignore', '--pyargs', 'sunpy.net.jsoc']
-    `,
+  assert args == ['-W', 'ignore', '--pyargs', 'sunpy.net.jsoc']`,
   },
 ];
 

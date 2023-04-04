@@ -4,64 +4,48 @@ const files: RepoFile[] = [
   {
     path: "src/utils/renderBatch.js",
     code: `
-def _validate_observer_args(initial_obstime, observer, time):
-  if (observer is not None) and (time is not None):
-    raise ValueError(
-      "Either the 'observer' or the 'time' keyword must be specified, "
-      "but not both simultaneously."
-    )
-  elif observer is not None:
-    if not (isinstance(observer, (BaseCoordinateFrame, SkyCoord))):
-      raise ValueError(
-        "The 'observer' must be an astropy.coordinates.BaseCoordinateFrame or an astropy.coordinates.SkyCoord."
-      )
-    if observer.obstime is None:
-      raise ValueError("The observer 'obstime' property must not be None.")
-  elif observer is None and time is None:
-    raise ValueError(
-      "Either the 'observer' or the 'time' keyword must not be None."
-    )
-  `,
+export default (config, isClosing) => (req, res) => {
+  if (isClosing()) {
+    logger.info('Starting request when closing!');
+  }
+  const jobs = req.body;
+  const manager = new BatchManager(req, res, jobs, config);
+  return processBatch(jobs, config.plugins, manager, config.processJobsConcurrently)
+    .then(() => {
+      if (isClosing()) {
+        logger.info('Ending request when closing!');
+      }
+      return res.status(manager.statusCode).json(manager.getResults()).end();
+    })
+    .catch(() => res.status(manager.statusCode).end());
+};`,
   },
   {
     path: "src/environment.js",
     code: `
-@pytest.fixture()
-def sunpy_cache(mocker, tmp_path):
-  from types import MethodType
-  cache = Cache(ParfiveDownloader(), InMemStorage(), tmp_path, None)
+function isNotMethod(name) {
+  return !(es6methods.includes(name) || es6StaticMethods.includes(name) || name.charAt(0) === '_');
+}
 
-  def add(self, url, path):
-    self._storage.store(
-      {
-        "url": url,
-        "file_path": path,
-        "file_hash": "none",
-      }
-    )
+function del(obj) {
+  return (key) => { delete obj[key]; };
+}
 
-  cache.add = MethodType(add, cache)
-  `,
+function toFastProperties(obj) {
+  (function () {}).prototype = obj;
+}`,
   },
   {
     path: "src/index.js",
     code: `
-def differential_rotate(smap, observer=None, time=None, **diff_rot_kwargs):
-  if is_all_off_disk(smap):
-    raise ValueError(
-      "The entire map is off disk. No data to differentially rotate."
-    )
+function decode(res) {
+  const jsonPayload = ENCODE.reduceRight((str, coding) => {
+    const [encodeChar, htmlEntity] = coding;
+    return str.replace(new RegExp(htmlEntity, 'g'), encodeChar);
+  }, res);
 
-  new_observer = _get_new_observer(smap.date, observer, time)
-
-  from skimage import transform
-
-  is_sub_full_disk = not contains_full_disk(smap)
-  if is_sub_full_disk:
-    if not is_all_on_disk(smap):
-      bottom_left, top_right = on_disk_bounding_coordinates(smap)
-      smap = smap.submap(bottom_left, top_right=top_right)
-  `,
+  return JSON.parse(jsonPayload);
+}`,
   },
 ];
 
