@@ -4,7 +4,7 @@ const editorElement = document.getElementById("editor") as HTMLElement;
 const statsElement = document.getElementById("stats") as HTMLElement;
 
 const LINES_PER_PAGE = 6;
-const TYPING_TIME_IN_MILLISECONDS = 60000;
+const TYPING_TIME_IN_MILLISECONDS = 45000;
 const CURSOR_CLASS_NAME = "cursor";
 const NEXT_CLASS_NAME = "next";
 const _WRONG_CLASS_NAME = "wrong";
