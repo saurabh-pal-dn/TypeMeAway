@@ -1,11 +1,11 @@
-import { Repo, RepoFile, repos } from "./data/constants";
-import { EditorResult, startEditor, clearEditor } from "./editor";
+import { SEPARATOR_LINE } from "./constants/terminal-constants";
+import { EditorResult, Repo, RepoFile, repos } from "./data/interfaces";
+import { startEditor, clearEditor } from "./editor";
 import {
   chooseOption,
   clearTerminal,
   readLine,
   removeTerminalCursor,
-  separatorLine,
   writeLines,
 } from "./terminal";
 import { getRandomIndex } from "./utility";
@@ -20,12 +20,12 @@ async function writeFileHeader(repo: Repo, file: RepoFile) {
   clearTerminal();
   const lines = [
     `${repo.label} it is!`,
-    separatorLine,
+    SEPARATOR_LINE,
     `Repo: ${repo.url}`,
     `File: ${file.path}`,
     " ",
     "Start typing!",
-    separatorLine,
+    SEPARATOR_LINE,
     " ",
   ];
   await writeLines(lines);
@@ -44,13 +44,13 @@ async function writeResult(result: EditorResult) {
       ? "Wow you've completed the entire snippet!"
       : "Time's up!",
     "Here are your results:",
-    separatorLine,
+    SEPARATOR_LINE,
     " ",
     `Correct characters per minute: ${ccps.toFixed(2)}`,
     `Total errors: ${errors > 0 ? errors : "No errors, what a performance!"}`,
     `Accuracy: ${accuracy.toFixed(2)}%`,
     " ",
-    separatorLine,
+    SEPARATOR_LINE,
     "Wanna play again? (y, n)",
     " ",
   ];
@@ -70,12 +70,10 @@ async function runGame() {
     ];
     await writeLines(lines);
 
-
     const repo: Repo = await chooseOption(repos);
     const file: RepoFile = repo.files[getRandomIndex(repo.files.length)];
     await writeFileHeader(repo, file);
     removeTerminalCursor();
-    
 
     const result: EditorResult = await startEditor(file.code);
 

@@ -1,4 +1,4 @@
-import { Repo, RepoFile } from "./constants";
+import { Repo, RepoFile } from "./interfaces";
 
 const files: RepoFile[] = [
   {

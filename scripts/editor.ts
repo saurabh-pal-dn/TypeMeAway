@@ -1,21 +1,17 @@
-import { backspaceKey, enterKey, tabKey } from "./keyboard";
-import { separatorLine } from "./terminal";
+import {
+  NEXT_CLASS_NAME,
+  WHITE_SPACE_REGEX,
+  CURSOR_CLASS_NAME,
+  TYPING_TIME_IN_MILLISECONDS,
+  LINES_PER_PAGE,
+  _WRONG_CLASS_NAME,
+} from "./constants/editor-constants";
+import { backspaceKey, enterKey, tabKey } from "./constants/keyboard-constants";
+import { SEPARATOR_LINE } from "./constants/terminal-constants";
+import { EditorResult } from "./data/interfaces";
+
 const editorElement = document.getElementById("editor") as HTMLElement;
 const statsElement = document.getElementById("stats") as HTMLElement;
-
-const LINES_PER_PAGE = 6;
-const TYPING_TIME_IN_MILLISECONDS = 45000;
-const CURSOR_CLASS_NAME = "cursor";
-const NEXT_CLASS_NAME = "next";
-const _WRONG_CLASS_NAME = "wrong";
-const WHITE_SPACE_REGEX: RegExp = /\s/;
-
-export type EditorResult = {
-  totalChars: number;
-  correctChars: number;
-  totalTime: number;
-  endReached: boolean;
-};
 
 function clearEditorElement() {
   editorElement.innerHTML = "";
@@ -51,7 +47,7 @@ function printStats(result: EditorResult): void {
   ).toFixed(0);
   statsElement.innerHTML = [
     "",
-    separatorLine,
+    SEPARATOR_LINE,
     `Time left: ${secondsLeft} seconds`,
     `Characters typed: ${result.totalChars}`,
     `Errors: ${result.totalChars - result.correctChars}`,

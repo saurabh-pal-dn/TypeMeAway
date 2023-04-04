@@ -1,13 +1,13 @@
-import { enterKey, backspaceKey } from "./keyboard";
+import {
+  TYPING_DELAY_IN_MILLISECONDS,
+  INPUT_REGEX,
+  PROMPT_PREFIX,
+} from "./constants/terminal-constants";
+import { enterKey, backspaceKey } from "./constants/keyboard-constants";
 import { getRandomIndex } from "./utility";
 
 const terminalElement = document.getElementById("terminal") as HTMLElement;
 const cursorElement = document.getElementById("cursor") as HTMLElement;
-
-export const separatorLine = "-------------------------------";
-const PROMPT_PREFIX: string = "$";
-const TYPING_DELAY_IN_MILLISECONDS: number = 1;
-const INPUT_REGEX: RegExp = /^[\w\d ]$/;
 
 export function addTerminalCursor(): void {
   if (cursorElement.parentElement !== terminalElement)
