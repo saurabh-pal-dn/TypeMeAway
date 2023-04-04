@@ -1,4 +1,4 @@
-import { Repo, RepoFile, repos } from "./data";
+import { Repo, RepoFile, repos } from "./data/constants";
 import { EditorResult, startEditor, clearEditor } from "./editor";
 import {
   chooseOption,

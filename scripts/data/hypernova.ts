@@ -1,4 +1,4 @@
-import { Repo, RepoFile } from "./index";
+import { Repo, RepoFile } from "./constants";
 
 const files: RepoFile[] = [
   {
@@ -11,7 +11,6 @@ def _validate_observer_args(initial_obstime, observer, time):
       "but not both simultaneously."
     )
   elif observer is not None:
-    # Check that the new_observer is specified correctly.
     if not (isinstance(observer, (BaseCoordinateFrame, SkyCoord))):
       raise ValueError(
         "The 'observer' must be an astropy.coordinates.BaseCoordinateFrame or an astropy.coordinates.SkyCoord."
@@ -57,11 +56,9 @@ def differential_rotate(smap, observer=None, time=None, **diff_rot_kwargs):
 
   from skimage import transform
 
-  # Check whether the input contains the full disk of the Sun
   is_sub_full_disk = not contains_full_disk(smap)
   if is_sub_full_disk:
     if not is_all_on_disk(smap):
-      # Get the bottom left and top right coordinates that are the
       bottom_left, top_right = on_disk_bounding_coordinates(smap)
       smap = smap.submap(bottom_left, top_right=top_right)
   `,

@@ -15,7 +15,6 @@ export type EditorResult = {
   correctChars: number;
   totalTime: number;
   endReached: boolean;
-  accuracy?: number;
 };
 
 function clearEditorElement() {
@@ -63,7 +62,6 @@ function normalizeCode(code: string): string {
   return code.trim().replace(/\t/g, " ");
 }
 
-//TODO: implement this
 export function startEditor(code: string): Promise<EditorResult> {
   const normalizedCode: string = normalizeCode(code);
   return new Promise<EditorResult>(async (resolve) => {
@@ -167,7 +165,7 @@ export function startEditor(code: string): Promise<EditorResult> {
     const processKey = (key: string) => {
       if (key.length === 1 && charIndex < line.length - 1) {
         if (startTime <= 0) beginTyping();
-        const isCorrect = key === line[charIndex]; //chekcing for char happeing here
+        const isCorrect = key === line[charIndex]; //chekcing for char
         advanceCharacter(isCorrect);
         if (isCorrect) correctCharacters++;
         totalCharacters++;
