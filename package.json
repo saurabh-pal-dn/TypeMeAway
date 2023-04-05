@@ -4,8 +4,6 @@
     "parcel": "^2.8.3"
   },
   "scripts": {
-		"clean": "rd dist",
-    "start": "parcel",
-    "build": "yarn clean && parcel build"
+    "start": "parcel index.html"
 	}
 }
