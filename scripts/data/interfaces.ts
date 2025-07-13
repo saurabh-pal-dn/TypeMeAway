@@ -1,5 +1,7 @@
 import { hyperNovaRepo } from "./hypernova";
+import { nuShellRepo } from "./nushell";
 import { sunPyRepo } from "./sunpy";
+import { vsCodeRepo } from "./vscode";
 
 export type RepoFile = {
   path: string;
@@ -19,4 +21,9 @@ export type EditorResult = {
   endReached: boolean;
 };
 
-export const repos: Repo[] = [sunPyRepo, hyperNovaRepo];
+export const repos: Repo[] = [
+  sunPyRepo,
+  hyperNovaRepo,
+  vsCodeRepo,
+  nuShellRepo,
+];

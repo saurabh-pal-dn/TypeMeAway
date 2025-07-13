@@ -48,7 +48,7 @@ function printStats(result: EditorResult): void {
   statsElement.innerHTML = [
     "",
     SEPARATOR_LINE,
-    `Time left: ${secondsLeft} seconds`,
+    `Time left: <mark>${secondsLeft}</mark> seconds`,
     `Characters typed: ${result.totalChars}`,
     `Errors: ${result.totalChars - result.correctChars}`,
   ].join("<br/>");
