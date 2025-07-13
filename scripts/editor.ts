@@ -6,7 +6,12 @@ import {
   LINES_PER_PAGE,
   _WRONG_CLASS_NAME,
 } from "./constants/editor-constants";
-import { backspaceKey, enterKey, tabKey } from "./constants/keyboard-constants";
+import {
+  backspaceKey,
+  enterKey,
+  esc,
+  tabKey,
+} from "./constants/keyboard-constants";
 import { SEPARATOR_LINE } from "./constants/terminal-constants";
 import { EditorResult } from "./data/interfaces";
 
@@ -189,6 +194,10 @@ export function startEditor(code: string): Promise<EditorResult> {
 
     const listener = (event: KeyboardEvent) => {
       const key = event.key;
+      if (key === esc) {
+        console.log(key);
+        window.location.reload();
+      }
       if (key === tabKey) {
         processKey(" ");
         processKey(" ");

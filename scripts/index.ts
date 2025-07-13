@@ -57,7 +57,7 @@ async function writeResult(result: EditorResult) {
   await writeLines(lines);
 }
 
-async function runGame() {
+export async function runGame() {
   let round = 0;
   let wantsToPlayAgain = true;
 
